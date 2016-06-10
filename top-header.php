@@ -1,5 +1,5 @@
 <?php 
-//session_start();
+if(!isset($_SESSION)){session_start();}
 require_once("header-principal.php");
 require_once("funciones.php");
 if (!empty($_SESSION['usuario'])) {

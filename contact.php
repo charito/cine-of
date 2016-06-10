@@ -1,5 +1,8 @@
 <?php
 	require_once("header-principal.php");
+	require_once("funciones.php");
+    
+
 ?>
 
 <body>	<!-- header-section-starts -->
