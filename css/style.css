@@ -541,7 +541,7 @@ p.claim {
   background:#fff;
 }
 .content-grid{
-	width: 22.75%;
+  width: 22%;
   float: left;
   text-align: center;
   border: 1px solid rgba(235, 235, 235, 0.53);
