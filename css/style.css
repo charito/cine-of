@@ -566,12 +566,13 @@ p.claim {
 .content-grid ul li{
 	display:inline-block;
 }
-.content-grid img{
+.content-grid > a > img{
 	display:block;
 	transition: 0.5s ease;
 	-o-transition: 0.5s ease;
 	-webkit-transition: 0.5s ease;
-	  width: 100%;
+	  width: 100%;	
+	  height: 430px;  
 }
 .content-grid:hover  img{
 	-webkit-filter: grayscale(100%);
