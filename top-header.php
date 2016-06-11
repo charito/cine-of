@@ -20,7 +20,8 @@ if (!empty($_SESSION['usuario'])) {
 		<?php
 			if(empty($username)) { ?>
 				<li class="active"><a href="login.php">Login </a></li>
-       			<li class="active"><a href="#">Crear cuenta</a></li>	
+       	<li><a id="boton_crearCuenta" data-toggle="modal" data-target="#modal_registro" href="#">Crear cuenta</a></li>	
+
 		<?php
 		} else {?>
 				<li><a href="#"><?php echo "$username"; ?></a></li>
@@ -32,3 +33,42 @@ if (!empty($_SESSION['usuario'])) {
 	</div>
 	<div class="clearfix"></div>
 </div>
+
+
+<div class="modal fade" id="modal_registro" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Registrarme</h4>
+      </div>
+      <div class="modal-body">
+        
+        <form>
+	        <div class="form-group">
+				    <label for="exampleInputEmail1">Usuario</label>
+				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Clave</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				  </div>
+				  
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox"> Check me out
+				    </label>
+				  </div>
+				  <button type="submit" class="btn btn-default">Submit</button>
+
+			  </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger">Crear Cuenta</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
