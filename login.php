@@ -36,12 +36,12 @@
          <div class="thumbnail"><img src="images/icon/claketa_1.gif" /></div>
          <div class="form">
              <form  method="POST" action="return false" onsubmit="return false">
-              <p><input class="form-control"  type="text" value="" id="user" name="user" placeholder="Usuario"></p>
-              <p><input class="form-control"  type="password" value="" id="pass" name="pass" placeholder="Password"></p>  <br>
-              <div class="col-xs-12">
-              <p><button class="btn btn-primary btn-block btn-flat"    onclick="valida(document.getElementById('user').value,document.getElementById('pass').value)">ENTRAR</button></p>
-              <p class="message">Already registered? <a href="#">Sign In</a></p>
-              </div>
+                <p><input class="form-control"  type="text" value="" id="user" name="user" placeholder="Usuario"></p>
+                <p><input class="form-control"  type="password" value="" id="pass" name="pass" placeholder="Password"></p>  <br>
+                <div class="col-xs-12">
+                  <p><button class="btn btn-primary btn-block btn-flat" onclick="valida(document.getElementById('user').value,document.getElementById('pass').value)">ENTRAR</button></p>
+                  <p class="message">Already registered? <a href="#">Sign In</a></p>
+                </div>
              </form>
          </div>
         </div>

@@ -29,7 +29,7 @@ if (!empty($_SESSION['usuario'])) {
 			<?php }
 		?>
 					
-				</ul>
+		</ul>
 	</div>
 	<div class="clearfix"></div>
 </div>

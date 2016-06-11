@@ -28,7 +28,7 @@
   
      <div class="container">
     <div class="info">
-      <h1>Movie</h1><span>Made with <i class="fa fa-heart"></i> by <a href="http://andytran.me">Andy Tran</a></span>
+      <h1>Movie</h1><span>Made with <i class="fa fa-heart"></i> by <a href="http://andytran.me">----</a></span>
     </div>
   </div>
          

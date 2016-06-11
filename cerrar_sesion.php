@@ -3,9 +3,9 @@ SESSION_START();
 SESSION_destroy();
 echo "see you lather"
 ?>
-<script>
-	location.href="index.php";
-</script>
+
+	
+
 <div class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -18,7 +18,7 @@ echo "see you lather"
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Save changes</button>        
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
