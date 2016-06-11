@@ -4,6 +4,7 @@
 	require_once("funciones.php");
     $xc=conectar();   
     if (!empty($_SESSION['id_usuario'])) {
+
     	$id_usuario=$_SESSION['id_usuario'];
 
     	$sql="SELECT c.id_Categoria, c.nombre_Categoria, c.img_Categoria FROM categoria_perfil cp, categoria c WHERE cp.Categoria_id_Categoria = c.id_Categoria and cp.Perfil_id_Perfil=$id_usuario";              
@@ -46,7 +47,10 @@
 
 		}
     }
-       desconectar($xc);
+    else{    	
+    	$categorias=array();
+    }
+    desconectar($xc);
 ?>
 
 <body>
