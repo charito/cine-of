@@ -19,8 +19,8 @@ if (!empty($_SESSION['usuario'])) {
 		
 		<?php
 			if(empty($username)) { ?>
-				<li class="active"><a href="login.php">Login </a></li>
-				<li><a id="btn_crearCuentaModal" data-toggle="modal" data-target="#modal_registro" href="#">Crear cuenta</a></li>	
+				<li><a id="btn_loginModal" data-toggle="modal" data-target="#modal_login" href="#">Login</a></li>
+				<li><a id="btn_crearCuentaModal" data-toggle="modal" data-target="#modal_registro" href="#">Crear cuenta</a></li>
 
 		<?php
 		} else {?>
@@ -33,6 +33,50 @@ if (!empty($_SESSION['usuario'])) {
 	</div>
 	<div class="clearfix"></div>
 </div>
+
+
+
+
+
+
+
+<!-- MODALS para LOGIN y REGISTRO -->
+
+
+<div class="modal fade" id="modal_login" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Login</h4>
+			</div>
+			<div class="modal-body">
+				
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="crear_usuario" class="col-sm-2 control-label">Usuario</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" name="usuario" id="crear_usuario" placeholder="Usuario">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="crear_password" class="col-sm-2 control-label">Constraseña</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" name="password" id="crear_password" placeholder="Contraseña">
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button id="btn_login" type="button" class="btn btn-danger">Iniciar Sesion</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 
 <div class="modal fade" id="modal_registro" tabindex="-1" role="dialog">

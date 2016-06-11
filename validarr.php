@@ -1,42 +1,31 @@
 <?php
-session_start();
-$con = new mysqli('localhost','root','root','dbcine');
-$user = $_POST['user'];
-$pass = $_POST['pass'];
+if(!isset($_SESSION)) session_start();
 
-if ($user == null || $pass == null)
-{
-  echo "<span>   Por favor completar todos los campos.</span>";
+require_once("funciones.php");
+
+$usuario = leerParam("usuario", "");
+$password = leerParam("password", "");
+
+$con = conectar();
+$query = "SELECT id_Perfil,usuario_Perfil,clave_Perfil FROM perfil WHERE usuario_Perfil='$usuario'  AND clave_Perfil='$password'";
+
+$resultados = mysqli_query($con,$query);
+
+if($resultados){
+	if (mysqli_num_rows($resultados)>0) {
+		
+		$fila1 = mysqli_fetch_array($resultados);
+		$_SESSION['usuario']=$fila1["usuario_Perfil"];
+		$_SESSION['id_usuario']=$fila1["id_Perfil"];
+		
+		$response_array['status'] = 'encontrado';
+	} else {
+		$response_array['status'] = 'noEncontrado';
+	}
+} else {
+	$response_array['status'] = 'error';
 }
-else{
-$consulta = mysqli_query($con,"SELECT id_Perfil,usuario_Perfil,clave_Perfil FROM perfil WHERE usuario_Perfil='$user'  AND clave_Perfil='$pass'");
 
-
-if(mysqli_num_rows($consulta)>0)
-{
-$_SESSION['usuario']=$user;
-$extraido = mysqli_fetch_array($consulta);
-$_SESSION['id_usuario']=$extraido["id_Perfil"];
-echo"<script>location.href='categoria.php'</script>";
-
-}
-else
-{
-  $consultas = mysqli_query($con,"SELECT login_solicitante,pass_solicitante FROM solicitante WHERE login_solicitante='$user'  AND pass_solicitante='$pass'");
-  if (mysqli_num_rows($consultas)>0) {
-
-$_SESSION['solicitante']=$user;
-echo"<script>location.href='descripcionTramite.php'</script>";
-
-}
-else
-
-  echo '<span>Usuario 1y/o contraseña invalidos, intente nuevamente </span>';
-}
-}
+header('Content-type: application/json');
+echo json_encode($response_array);
 ?>
-
-
-
-
-

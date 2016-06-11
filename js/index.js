@@ -4,6 +4,50 @@
   $('#boton_crearCuenta').focus()
 })*/
 
+
+
+
+$('#btn_login').click(function(event) {
+  
+  var usuario = $('#crear_usuario').val();
+  var password = $('#crear_password').val();
+
+  if(usuario != "" &&
+    password != "")
+  {
+    $.ajax({
+      url: 'validarr.php',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        'usuario' : usuario,
+        'password' : password
+      }
+    })
+    .done(function(result) {
+      console.log(result);
+
+      if(result['status'] == 'encontrado') {
+        $('#modal_login').modal('hide');
+        /// redireccion a categorias
+        location.href='categoria.php';
+      }
+      if(result['status'] == 'noEncontrado') {
+        alert('usuario o contraseña incorrecto');
+      }
+
+    })
+    .fail(function(error) {
+      console.log(error);
+    });
+    
+  } else {
+    alert("llene todos los campos para iniciar sesion!");
+  }
+
+});
+
+
 $('#btn_crearcuenta').click(function(event) {
   
   var usuario = $('#crear_usuario').val();
@@ -41,7 +85,7 @@ $('#btn_crearcuenta').click(function(event) {
     });
     
   } else {
-    alert("lelna los campos");
+    alert("llene todos los campos para registrarse");
   }
 
 });
