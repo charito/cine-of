@@ -14,7 +14,7 @@ if (!empty($_SESSION['usuario'])) {
 		<a href="index.php"><img src="images/icon/logo.jpg" alt="" /></a>
 		<p>Peliculas</p>
 	</div>
-	<div class="collapse navbar-collapse">>
+	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav navbar-right">
 		
 		<?php
@@ -24,7 +24,7 @@ if (!empty($_SESSION['usuario'])) {
 		<?php
 		} else {?>
 				<li><a href="#"><?php echo "$username"; ?></a></li>
-       			<li><a href="#">Cerrar Sesion</a></li>		
+       			<li><a href="cerrar_sesion.php">Cerrar Sesion</a></li>		
 			<?php }
 		?>
        		

@@ -2,7 +2,7 @@
   if(!isset($_SESSION)) session_start();
 
   if(!empty($_SESSION['id_usuario'])) {
-    header("Location: videos.php");
+    header("Location: index.php");
     die();
   }
 ?>

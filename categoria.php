@@ -1,13 +1,25 @@
 <?php
 	require_once("header-principal.php");
-	session_start();
-	//$S_SESSION['id_Categoria'] =   */
+	require_once("funciones.php");
+	
+  	if(!isset($_SESSION)) session_start();
 
-//if (isset($_SESSION['solicitante'])) {
-  
-    require_once("funciones.php");
+	if(empty($_SESSION['id_usuario'])) {
+		header("Location: index.php");
+    	die();    
+    }
     $xc=conectar();   
+    $num_categ="SELECT count(*) from categoria_perfil where Perfil_id_Perfil=".$_SESSION['id_usuario'];
+    $resultado=mysqli_query($xc,$num_categ);
 
+    if ($i=mysqli_fetch_array($resultado)) {
+    	$j = $i[0];
+    	if ($j>0) {
+    			header("Location: videos.php");
+    			die();
+    		}
+    }
+    
     $Categorias = leerParam("categoria",false);
     if (!empty($Categorias)) {
     	echo "$Categorias";
@@ -38,10 +50,11 @@
     require_once("header-principal.php");
 
       
-       $sql="SELECT * FROM categoria";              
+       $sql="SELECT * FROM categoria";             
        $resultado=mysqli_query($xc,$sql)
        or die ("Error al consultar los datos");
-      
+	   
+
        desconectar($xc);
      
 ?>
