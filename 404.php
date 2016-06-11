@@ -19,6 +19,15 @@
 			<?php
 				require_once("top-header.php");
 			?>
+			<?php
+				require_once("top-header.php");
+			?>
+			<?php
+				require_once("top-header.php");
+			?>
+			<?php
+				require_once("top-header.php");
+			?>
 			<div class="error-404 text-center">
 				<h2>404</h2>
 				<p>Sorry this was unexpected</p>
