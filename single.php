@@ -1,7 +1,13 @@
+ <link type="text/css" rel="stylesheet" href="rating/css/stylestar.css">
+        <link type="text/css" rel="stylesheet" href="rating/css/example.css">
+        <script type="text/javascript" src="rating/jquery.min.js"></script>
 <?php
 	require_once("header-principal.php");
 	require_once("funciones.php");
+//SESSION_START();
+//$usu = $_SESSION['usuario']
 
+$id_Perfil=1;
 //$id_Peli=leerParam("id","");
 $id_Peli=4;
 $xc = conectar();
@@ -11,7 +17,8 @@ $rowPelis=mysqli_fetch_array($res1);
 $nombre_Peli=$rowPelis[1];
 $duracion_Peli=$rowPelis[2];
 $estreno_Peli=$rowPelis[3];
-//$logo_Peli=$rowPelis[5];
+$logo_Peli=$rowPelis[5];
+
 $id_Director=$rowPelis[6];
 $vistos_Peli=$rowPelis[7];
 
@@ -20,11 +27,12 @@ $res2=mysqli_query($xc,$sql2);
 $rowDir=mysqli_fetch_array($res2);
 $nombre_Director = $rowDir[0];
 
-$sql3="SELECT * FROM dbcine.resena where Peliculas_id_Peli = '$id_Peli';";
+$sql3="SELECT * FROM dbcine.resena where Peliculas_id_Peli ='$id_Peli';";
 $res3=mysqli_query($xc,$sql3);
 $rowRes=mysqli_fetch_array($res3);
-$sinopsis_Resena = $rowRes[1];
 
+$id_Resena = $rowRes[0];
+$sinopsis_Resena = $rowRes[1];
 $url_trailer = $rowRes[3];
 $url_latino1 = $rowRes[4];
 $url_latino2 = $rowRes[5];
@@ -32,15 +40,21 @@ $url_espanol = $rowRes[6];
 $url_sub = $rowRes[7];
 
 
+
+
+
 $sql4="SELECT nombre_Actor FROM dbcine.actores natural join dbcine.actores_peliculas where dbcine.actores_peliculas.id_Peli = '$id_Peli' order by 1;";
 $res4=mysqli_query($xc,$sql4);
 $rowAct=mysqli_fetch_array($res4);
 
-$sql5="SELECT comentario, fecha_comentario FROM dbcine.comentarios natural join dbcine.resena where dbcine.resena.Peliculas_id_Peli = $id_Peli order by fecha_comentario = 1;";
+
+$sql5="SELECT comentario, fecha_comentario, calificacion_comentario, nombre_Perfil,foto_Perfil FROM dbcine.perfil natural join dbcine.comentarios natural join dbcine.resena where perfil.id_Perfil = comentarios.id_Perfil and dbcine.resena.Peliculas_id_Peli ='$id_Peli' order by fecha_comentario = 1;";
+
 $res5=mysqli_query($xc,$sql5);
 $rowCom=mysqli_fetch_array($res5);
 //$comentarios = $rowCom[0];
 //$fecha_comentario = $rowCom[1];
+
 
 $sql6="SELECT * FROM dbcine.categoria_peliculas natural join dbcine.categoria where dbcine.categoria_peliculas.id_Peli = $id_Peli;";
 $res6=mysqli_query($xc,$sql6);
@@ -48,10 +62,15 @@ $rowCat=mysqli_fetch_array($res6);
 
 
 
+$sql7="INSERT INTO dbcine.comentarios(comentario,fecha_comentario, calificacion_comentario, id_Resena, id_Perfil) VALUES ('jojojojojo', '12-12-12', '', '1', '1');";
+
+
+$post_id = '1';
 desconectar($xc);
 ?>
 
-<body>
+<body onload="cargaContenido(<?php echo $id_Peli; ?>)">
+
 	<!-- header-section-starts -->
 	<div class="full">
 			<div class="menu">
@@ -82,23 +101,70 @@ desconectar($xc);
 				<h3 class="head">Reseña de las Peliculas</h3>
 					<div class="col-md-9 reviews-grids">
 						<div class="review">
-							<div class="movie-pic">
-								<a href="single.html"><img src="images/review/r4.jpeg" alt="" /></a>
+							<div class="movie-pic">		
+								<a href=""><img src="data:image/jpg;base64,<?php echo base64_encode($logo_Peli);?>"></a>
 							</div>
 							<div class="review-info">
 								<a class="span" name="nombre_Peli"> <?php echo $nombre_Peli; ?></a>
 								<p class="dirctr"><a href="">Fecha de estreno: </a><?php echo $estreno_Peli; ?> </p>
-								<p class="ratingview">Critic's Rating:</p>
-								<div class="rating">
-									<span>☆</span>
-									<span>☆</span>
-									<span>☆</span>
-									<span>☆</span>
-									<span>☆</span>
+								<p class="ratingview">TU CALIFICACIÒN :</p>
+								<p class="ratingview"></p>
+
+
+								<div class="tuto-cnt">
+								<div class="rate-ex1-cnt">
+									<div id="1" class="rate-btn-1 rate-btn"></div>
+									<div id="2" class="rate-btn-2 rate-btn"></div>
+									<div id="3" class="rate-btn-3 rate-btn"></div>
+									<div id="4" class="rate-btn-4 rate-btn"></div>
+									<div id="5" class="rate-btn-5 rate-btn"></div>
 								</div>
+								</div>
+								<button class"button" onclick="cargar()">Califica la Pelicula</button>
+										
+		<hr>
+		  
+            <?php
+            $xc = conectar();
+            $sql= "SELECT * FROM wcd_rate WHERE id_post = $post_id ";
+                $query = mysqli_query($xc, $sql); 
+                while($data = mysqli_fetch_assoc($query)){
+                    $rate_db[] = $data;
+                    $sum_rates[] = $data['rate'];
+                }
+                if(@count($rate_db)){
+                    $rate_times = count($rate_db);
+                    $sum_rates = array_sum($sum_rates);
+                    $rate_value = $sum_rates/$rate_times;
+                    $rate_bg = (($rate_value)/5)*100;
+                }else{
+                    $rate_times = 0;
+                    $rate_value = 0;
+                    $rate_bg = 0;
+                }
+                
+            ?>
+            <hr>
+            <h3>Esta pelicula fuè calificada ... <strong><?php echo $rate_times; ?></strong> veces.</h3>
+            <hr>
+            <h3>La calificaciòn de la pelicula: <strong><?php echo $rate_value; ?></strong> .</h3>
+            <hr>
+            <div class="rate-result-cnt">
+            <div class="rate-stars"></div>
+                <div class="rate-bg" style="width:<?php echo $rate_bg; ?>%"></div>
+                
+           
+            <hr>
+
+        </div><!-- /rate-result-cnt -->
+
+    </div><!-- /tuto-cnt -->
+
+
 								<p class="ratingview">
 								&nbsp;3.5/5  
 								</p>
+								<!--
 								<div class="clearfix"></div>
 								<p class="ratingview c-rating">Avg Readers' Rating:</p>
 								<div class="rating c-rating">
@@ -124,7 +190,7 @@ desconectar($xc);
 										<option value="7">4.5(Very good)</option>
 										<option value="8">5.Outstanding</option>
 									  </select>
-									</div>
+									</div>-->
 									<div class="rtm text-center">
 										<a href="#">REVIEW THIS MOVIE</a>
 									</div>
@@ -176,83 +242,29 @@ desconectar($xc);
 							<!-- comments-section-starts -->
 							<div class="story-review">
 							<h4>TRAILER:</h4>
-								<iframe width="853" height="480" src="https://www.youtube.com/embed/I1MFkzLv_HA" frameborder="0" allowfullscreen></iframe>
+								<iframe width="853" height="480" src=<?php echo $url_trailer; ?> frameborder="0" allowfullscreen></iframe>
 							</div>
-	    <div class="comments-section">
-	        <div class="comments-section-head">
-				<div class="comments-section-head-text">
-					<h3>25 Comments</h3>
-				</div>
-				<div class="clearfix"></div>
-		    </div>
-		    <div class="comments-section-grids">
-		    <?php 
-		    $numero_filas=mysqli_num_rows($res5);
-
-		    
-				while ($rowCom=mysqli_fetch_array($res5))
-
-		    	{
-		    		echo "<div class='comments-section-grid'>
-					<div class='col-md-2 comments-section-grid-image'>
-						<img src='images/eye-brow.jpg' class='img-responsive' alt='' />
-					</div>
-					<div class='col-md-10 comments-section-grid-text'>
-						<h4><a href='#'>NOMBRE DEL PERSONO</a></h4>
-
-						<label>"; echo $rowCom['fecha_comentario'];  echo "</label>
-						<p>"; echo $rowCom['comentario']; echo "</p>
-						<span><a href='#'>Reply</a></span>
-						<i class='rply-arrow'></i>
-					</div>
-					<div class='clearfix'></div>
-				</div>";
-		    	}
-		     ?>
-			
-				
-				<!--<div class="comments-section-grid comments-section-middle-grid">
-					<div class="col-md-2 comments-section-grid-image">
-						<img src="images/beauty.jpg" class="img-responsive" alt="" />
-					</div>
-					<div class="col-md-10 comments-section-grid-text">
-						<h4><a href="#">MARWA ELGENDY</a></h4>
-						<label>5/4/2014 at 22:00   </label>
-						<p>But I must explain to you how all this idea denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound but because those who do not know how to pursue pleasure rationally encounter consequences.</p>
-						<span><a href="#">Reply</a></span>
-						<i class="rply-arrow"></i>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="comments-section-grid">
-					<div class="col-md-2 comments-section-grid-image">
-						<img src="images/stylish.jpg" class="img-responsive" alt="" />
-					</div>
-					<div class="col-md-10 comments-section-grid-text">
-						<h4><a href="#">MARWA ELGENDY</a></h4>
-						<label>5/4/2014 at 22:00   </label>
-						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound but because those who do not know how to pursue pleasure rationally encounter consequences.</p>
-						<span><a href="#">Reply</a></span>
-						<i class="rply-arrow"></i>
-					</div>
-					<div class="clearfix"></div>
-				</div>   -->
-			</div>
+<!--inicio de los comentarios -->
+	    <div class="comments-section" id="divComentarios">
+	    
 	    </div>
-	  <!-- comments-section-ends -->
+
+	  <!-- Fin de los comentarios -->
+	  <div id="divCarga"></div>
 		  <div class="reply-section">
 			  <div class="reply-section-head">
 				  <div class="reply-section-head-text">
-					  <h3>Leave Reply</h3>
+					  <h3>Deja tu comentario</h3>
 				  </div>
 			  </div> 
 			<div class="blog-form">
-			    <form>
-					<input type="text" class="text" value="Enter Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Name';}">
-					<input type="text" class="text" value="Enter Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Email';}">
-					<input type="text" class="text" value="Subject" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject';}">
-					<textarea></textarea>
-					<input type="button" value="SUBMIT COMMENT">
+			    <form >
+					<input type="text" class="text"  id="comentario" value="" size="100">
+					
+					
+					<input type="button" class="btn btn-default" value="Guardar" onclick="guardaContenido(comentario.value,<?php 
+					echo $id_Peli;?>,<?php echo $id_Resena;?>, <?php echo $id_Perfil;?>),cargaContenido(<?php echo $id_Peli; ?>)">
+					<input type="button-control" class="btn btn-default" value="actualizar"onclick="cargaContenido(<?php echo $id_Peli; ?>)"
 			    </form>
 			 </div>
 		  </div>
@@ -262,7 +274,7 @@ desconectar($xc);
 			
 
 					</div>
-
+<div id="divCarga"></div>
 					<div class="clearfix"></div>
 			</div>
 			</div>
@@ -270,5 +282,62 @@ desconectar($xc);
 	<?php
 		require_once("footer.php");
 	?>
+	   <script>
+    function cargar()
+{
+
+	$.ajax({
+			
+			url: 'rating/cargar.php',
+			type: 'post',
+			
+			success: function (response)
+			{
+                //debugger;
+				$("#resultado").html(response);
+			}
+		});
+}
+        // rating script
+        $(function(){ 
+            $('.rate-btn').hover(function(){
+                $('.rate-btn').removeClass('rate-btn-hover');
+                var therate = $(this).attr('id');
+                for (var i = therate; i >= 0; i--) {
+                    $('.rate-btn-'+i).addClass('rate-btn-hover');
+                };
+            });
+               
+          
+            $('.rate-btn').click(function(){    
+              
+                var therate = $(this).attr('id');
+                var dataRate = 'act=rate&post_id=<?php echo $post_id; ?>&rate='+therate; //
+                $('.rate-btn').removeClass('rate-btn-active');
+                for (var i = therate; i >= 0; i--) {
+                    $('.rate-btn-'+i).addClass('rate-btn-active');
+                    cargar();
+                };
+
+                $.ajax({
+                    
+                    type : 'post',
+                    url : 'rating/ajax.php',
+                    data: dataRate,
+                    
+                    success:function(response)
+                    {
+                  //debugger;
+                        
+                        $("#resultado").html(response);
+                    }
+                    
+                });
+                
+            });
+        });
+
+
+    </script>
 </body>
 </html>
