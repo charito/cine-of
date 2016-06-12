@@ -161,7 +161,7 @@
 				?>
 					
 					<div class="col-xs-12">
-						<button class="btn btn-primary btn-block btn-flat" onclick="post('/cine-oficial/categoria.php', {categoria: categ_selec});">Continuar</button>
+						<button class="btn btn-primary btn-block btn-flat" onclick="post('/cine-of/categoria.php', {categoria: categ_selec});">Continuar</button>
 					</div>
 
 					<div class="clearfix"> </div>
