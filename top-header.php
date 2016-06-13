@@ -4,6 +4,7 @@ require_once("header-principal.php");
 require_once("funciones.php");
 if (!empty($_SESSION['usuario'])) {
 	$username=$_SESSION['usuario'];
+	$id_Perfil=$_SESSION['id_usuario'];
 }
 
 //$password=$_SESSION[''];

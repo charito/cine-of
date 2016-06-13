@@ -6,8 +6,8 @@
 	require_once("funciones.php");
 //SESSION_START();
 //$usu = $_SESSION['usuario']
-
-$id_Perfil=1;
+//$id_Perfil=$_SESSION['id_usuario'];
+//$id_Perfil=1;
 //$id_Peli=leerParam("id","");
 $id_Peli=4;
 $xc = conectar();
@@ -117,8 +117,8 @@ desconectar($xc);
 		<hr>
 			<div id="divResultado" onclick="cargar(<?php echo $id_Peli; ?>)">
 	      
-        <!--    <?php
-		/*
+           <?php
+		
             $xc = conectar();
             $sql= "SELECT * FROM wcd_rate WHERE id_post = $post_id ";
                 $query = mysqli_query($xc, $sql); 
@@ -136,7 +136,7 @@ desconectar($xc);
                     $rate_value = 0;
                     $rate_bg = 0;
                 }
-                */
+                
             ?>
 
 		
@@ -148,7 +148,7 @@ desconectar($xc);
             <hr>
             <h3>La calificaciòn de la pelicula: <strong><?php echo $rate_value; ?></strong> .</h3>
             <hr>
-			  -->
+			  
             <div class="rate-result-cnt">
             <div class="rate-stars"></div>
                 <div class="rate-bg" style="width:<?php echo $rate_bg; ?>%"></div>
@@ -161,16 +161,14 @@ desconectar($xc);
     </div><!-- /tuto-cnt -->
 
 
-								<p class="ratingview">
-								&nbsp;3.5/5  
-								</p>
+							<!--	
 							
 									<div class="rtm text-center">
 										<a href="#">REVIEW THIS MOVIE</a>
 									</div>
 									<div class="wt text-center">
 										<a href="#">WATCH THIS TRAILER</a>
-									</div>
+									</div> -->
 									<div class="clearfix"></div>
 								</div>
 								<p class="info">CAST:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
