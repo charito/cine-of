@@ -9,8 +9,8 @@
 
 $('#btn_login').click(function(event) {
   
-  var usuario = $('#crear_usuario').val();
-  var password = $('#crear_password').val();
+  var usuario = $('#login_usuario').val();
+  var password = $('#login_password').val();
 
   if(usuario != "" &&
     password != "")

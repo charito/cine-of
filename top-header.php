@@ -57,13 +57,13 @@ if (!empty($_SESSION['usuario'])) {
 					<div class="form-group">
 						<label for="crear_usuario" class="col-sm-2 control-label">Usuario</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" name="usuario" id="crear_usuario" placeholder="Usuario">
+							<input type="email" class="form-control" name="usuario" id="login_usuario" placeholder="Usuario">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="crear_password" class="col-sm-2 control-label">Constraseña</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" name="password" id="crear_password" placeholder="Contraseña">
+							<input type="password" class="form-control" name="password" id="login_password" placeholder="Contraseña">
 						</div>
 					</div>
 				</form>
