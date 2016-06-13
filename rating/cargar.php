@@ -1,5 +1,7 @@
+        <?php require_once("funciones.php"); ?>
         <div class="box-result-cnt">
             <?php
+            $post_id = $_GET['var'];
             $xc = conectar();
             $sql= "SELECT * FROM wcd_rate WHERE id_post = $post_id ";
                 $query = mysqli_query($xc, $sql); 
