@@ -25,7 +25,8 @@ if (!empty($_SESSION['usuario'])) {
 
 		<?php
 		} else {?>
-				<li><a href="#"><?php echo "$username"; ?></a></li>
+				<li><a href="perfil2.php"><?php echo "$username"; ?></a></li>
+				<li><a href="editarusuario.php">Configurar Cuenta</a></li>
 				<li><a href="cerrar_sesion.php">Cerrar Sesion</a></li>
 			<?php }
 		?>

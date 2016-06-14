@@ -102,65 +102,81 @@
 			</div>
 			<section id="services">
 		        <div class="container">
-		            <div class="row">
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-		                            <img src="images/noticia/angry.png" alt="">
-		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</p>
-		                    </div>
-		                </div>
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-		                            <img src="images/noticia/alicia.jpg" alt="">
-		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
-		                    </div>
-		                </div>
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-		                            <img src="images/noticia/avengers.jpg" alt="">
-		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
-		                    </div>
-		                </div>
-		            </div>
+		            
+				<?php
+					$xc = conectar();
 
-		            <div class="row">
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-		                            <img src="images/noticia/capitan.png" alt="">
+$sql4="SELECT id_Noticia, titulo_Noticia,imagen_Noticia,subtitulo_Noticia FROM dbcine.noticias;";
+$res4=mysqli_query($xc,$sql4);
+$rowNot=mysqli_fetch_array($res4);
+
+					/*		echo $rowNot['titulo_Noticia'].", ";
+					while ($rowNot=mysqli_fetch_array($res4)) {
+							echo $rowNot['titulo_Noticia'].", ";
+
+							if(!)
+					}
+
+*/
+echo "
+	 				<div class=row>
+		                <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
+		                    <div class=single-service>
+		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
+		                            <img src=data:image/jpg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " alt= />
+									
 		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</p>
+		                        <h2>"; echo $rowNot['titulo_Noticia']; echo "</h2>
+		                        <p>"; echo $rowNot['subtitulo_Noticia']; echo"</p>
 		                    </div>
-		                </div>
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-		                            <img src="images/noticia/justin.jpg" alt="">
+							</div>
+		                
+						 ";
+						
+
+$i=0;
+$k = 2;
+while ($rowNot=mysqli_fetch_array($res4)) {
+  //Para corregir el problema de que se empieza a contar de 0 
+ if ($k == 4 || $k == 7 || $k ==10 ){ 
+ 
+	 			echo "</div>
+	 				<div class=row>
+		                <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
+		                    <div class=single-service>
+		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
+		                            <img src=data:image/jpg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " />
+									
 		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
+		                        <h2>"; echo $rowNot['titulo_Noticia'].$k; echo "</h2>
+		                       <p>"; echo $rowNot['subtitulo_Noticia']; echo "</p>
+							   
 		                    </div>
-		                </div>
-		                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
-		                    <div class="single-service">
-		                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-		                            <img src="images/noticia/spider.jpg" alt="">
+		                </div>";
+
+ }
+ else {   
+					echo "<div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
+		                    <div class=single-service>
+		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
+		                            <img onclick src=data:image/jpeg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " />
 		                        </div>
-		                        <h2>Noticia</h2>
-		                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
-		                    </div>
-		                </div>
-		            </div>
+		                        <h2>"; echo $rowNot['titulo_Noticia']; echo "</h2>
+		                      <p>"; echo $rowNot['subtitulo_Noticia'].$k; echo"</p>
+		                    </div> 
+							 </div>
+							 ";
+
+  } 
+ //{$clase = ' class="tercero"';}
+ //echo '<li'.$clase.'>'.$elemento[$i].'</li>'
+$k=$k+1;
+
+}
+ 
+
+					?>
+
 		        </div>
     		</section>
 			<div class="clearfix"></div>
