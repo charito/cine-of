@@ -2,12 +2,51 @@
 	require_once("header-principal.php");
 	session_start();
 	require_once("funciones.php");
-    $xc=conectar();   
+    $xc=conectar();
+
+    /// conocer cuantas peliculas existen en la base de datos
+    $sql_numPeliculas="SELECT count(*) FROM peliculas p";
+    $numPeliculas = mysqli_query($xc,$sql_numPeliculas);
+    $numPeliculas = (int) mysqli_fetch_array($numPeliculas)[0];
+    /// obtener TODAS las PELICULAS con paginacion
+	$current_pag = (int) leerParam("pag","1");
+	$cant_pag = (int) 12;
+	$ini_pag = ( $current_pag-1 ) * $cant_pag ;
+	$sql_allPeliculas="SELECT p.nombre_Peli, p.duracion_Peli, p.estreno_Peli, p.imagen_Portada_Peli, p.logo_Peli FROM peliculas p LIMIT $ini_pag,$cant_pag";
+	$allPeliculas = mysqli_query($xc,$sql_allPeliculas);
+	$allPeliculas_array = array();
+	while ($extraido = mysqli_fetch_array($allPeliculas)) {
+		$current_pelicula = array();
+
+		$current_pelicula["nombre_Peli"] = $extraido['nombre_Peli'];
+		$current_pelicula["duracion_Peli"] = $extraido['duracion_Peli'];
+		$current_pelicula["estreno_Peli"] = $extraido['estreno_Peli'];
+
+		/// los blobs se tienen que transformar paara guardarlos en el array
+		$image = imagecreatefromstring($extraido['imagen_Portada_Peli']); 
+		ob_start(); //start capture of the output buffer
+		imagejpeg($image, null, 80);
+		$data = ob_get_contents();
+		ob_end_clean();
+		$current_pelicula["imagen_Portada_Peli"] = $data;
+
+		$image = imagecreatefromstring($extraido['logo_Peli']); 
+		ob_start(); //start capture of the output buffer
+		imagejpeg($image, null, 80);
+		$data = ob_get_contents();
+		ob_end_clean();
+		$current_pelicula["logo_Peli"] = $data;
+
+		$allPeliculas_array[] = $current_pelicula;
+	}
+
+	/// obtener peliculas por categoria de usuario
+
     if (!empty($_SESSION['id_usuario'])) {
 
     	$id_usuario=$_SESSION['id_usuario'];
 
-    	$sql="SELECT c.id_Categoria, c.nombre_Categoria, c.img_Categoria FROM categoria_perfil cp, categoria c WHERE cp.Categoria_id_Categoria = c.id_Categoria and cp.Perfil_id_Perfil=$id_usuario";              
+    	$sql="SELECT c.id_Categoria, c.nombre_Categoria, c.img_Categoria FROM categoria_perfil cp, categoria c WHERE cp.Categoria_id_Categoria = c.id_Categoria and cp.Perfil_id_Perfil=$id_usuario";
 
        	$cate_resultado=mysqli_query($xc,$sql);
        	$categorias = array();
@@ -98,9 +137,9 @@
 								<li><a href="#"><img src="images/views.png" title="views" /></a></li>
 								<li><a href="#"><img src="images/link.png" title="link" /></a></li>
 							</ul>
-							<a class="button play-icon popup-with-zoom-anim" href="#PELIC1">Mirar</a>
+							<a class="button play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-".$key_p; ?>">Mirar</a>
 							<div id="PELIC<?php echo $key."-".$key_p; ?>" class="mfp-hide">
-								<iframe src="https://www.youtube.com/embed/bXQCptmBQ3c" frameborder="0" allowfullscreen></iframe>
+								<iframe src="https://www.youtube.com/embed/FXK0BCG807Y" frameborder="0" allowfullscreen></iframe>
 							</div>
 						</div>
 					<?php endforeach;?>
@@ -113,103 +152,54 @@
 						<h3 class="head">M&aacutes videos</h3>
 					</div>
 				</div>
+
+					<?php 
+						foreach ($allPeliculas_array as $key => $value): ?>
+
+						<div class="content-grid">
+							<?php /// este codigo: echo $key."-peli"; es para crear un id personal para cada pelicula y poder hacer el popup mostrando la pelicula ?>
+							<a class="play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-peli"; ?>"">
+								<img src="data:image/jpeg;base64,<?php echo base64_encode($value["imagen_Portada_Peli"]); ?>" />
+							</a>
+							<h3><?php echo $value["nombre_Peli"]; ?></h3>
+							<ul>
+								<li><a href="#"><img src="images/likes.png" title="likes" /></a></li>
+								<li><a href="#"><img src="images/views.png" title="views" /></a></li>
+								<li><a href="#"><img src="images/link.png" title="link" /></a></li>
+							</ul>
+							<a class="button play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-peli"; ?>">Mirar</a>
+							<div id="PELIC<?php echo $key."-peli"; ?>" class="mfp-hide">
+								<iframe src="https://www.youtube.com/embed/FXK0BCG807Y" frameborder="0" allowfullscreen></iframe>
+							</div>
+						</div>
+						<?php if( ((int)$key+1) % 4 == 0 ): ?>
+							<div class="clearfix"> </div>
+						<?php endif;?>
+
+					<?php endforeach;?>
 				
-					<div class="content-grid">
-
-						<a class="play-icon popup-with-zoom-anim" href="#PELI1"><img src="images/poster/1.jpg" title="allbum-name" /></a>
-						<h3>Frozen :Una Aventura.</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI1">Mirar</a>
-					</div>
-
-					<div class="content-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI2"><img src="images/poster/2.jpg" title="allbum-name" /></a>
-						<h3>El efecto Mariposa</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI2">Mirar</a>
-					</div>
-					<div class="content-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI3"><img src="images/poster/3.jpg" title="allbum-name" /></a>
-						<h3>Malefica</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI3">Mirar</a>
-					</div>
-					<div class="content-grid last-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI4"><img src="images/poster/4.jpg" title="allbum-name" /></a>
-						<h3>Hansel y gretel: cazadores de brujas</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI4">Mirar</a>
-					</div>
-					<div class="content-grid">
-						<a class="play-icon popup-with-zoom-anim" href="PELI5"><img src="images/poster/5.jpg" title="allbum-name" /></a>
-						<h3>La Noche del Demonio</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI5">Mirar</a>
-					</div>
-					<div class="content-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI6"><img src="images/poster/6.jpg" title="allbum-name" /></a>
-						<h3>El Conde de Montecristo</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI6">Mirar</a>
-					</div>
-					<div class="content-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI7"><img src="images/poster/7.jpg" title="allbum-name" /></a>
-						<h3>Inframundo</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI7">Mirar</a>
-					</div>
-					<div class="content-grid last-grid">
-						<a class="play-icon popup-with-zoom-anim" href="#PELI8"><img src="images/poster/8.jpg" title="allbum-name" /></a>
-						<h3>Jobs</h3>
-						<ul>
-							<li><a href="#"><img src="images/likes.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/views.png" title="image-name" /></a></li>
-							<li><a href="#"><img src="images/link.png" title="image-name" /></a></li>
-						</ul>
-						<a class="button play-icon popup-with-zoom-anim" href="#PELI8">Mirar</a>
-					</div>
-					
 				
 					<div class="clearfix"> </div>
 					
-					<div class="pagenation">
-						<ul>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">Next</a></li>
-						</ul>
-					</div>
+					<?php 
+						$num_pages = (int) ( (int)($numPeliculas-1) / (int)$cant_pag );
+						$num_pages = $num_pages + 1;
+						if ($num_pages > 1): ?>
+							<div class="pagenation">
+								<ul>
+
+								<?php for ($i=1; $i <= $num_pages; $i++): ?>
+									<li><a href="videos.php?pag=<?php echo $i;?>"><?php echo $i;?></a></li>
+								<?php endfor;?>
+								<?php if ($current_page != $num_pages): ?>
+									<li><a href="videos.php?pag=<?php echo $i+1;?>">Siguiente</a></li>
+								<?php endif;?>
+									
+								</ul>
+							</div>
+					<?php endif;?>
+					
+					
 					<div class="clearfix"> </div>
 					
 				</div>
@@ -233,55 +223,6 @@
 						});
 						});
 				</script>
-
-				<div id="PELI1" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/bXQCptmBQ3c" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI2" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/FXK0BCG807Y" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI3" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/JYO3N7LpQ6g" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI4" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/ZLbY5nxzGbY" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI5" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/2vW02jfBhjs" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-
-					<div id="PELI6" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/eJk1OtFvl1s" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI7" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/jU2NBOTF7Qg" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI8" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/jbJ7jM-m0ic" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI9" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/NGwAu4g_1PY" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI10" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/zEGcjQ2Cr3M" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI11" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/3NmUk-y9Ri8" frameborder="0" allowfullscreen></iframe>
-					</div>
-
-					<div id="PELI12" class="mfp-hide">
-						<iframe  src="https://www.youtube.com/embed/469a5aWNhKg" frameborder="0" allowfullscreen></iframe>
-					</div>
 					
 	<?php
 		require_once("footer.php");

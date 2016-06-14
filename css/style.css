@@ -571,8 +571,8 @@ p.claim {
 	transition: 0.5s ease;
 	-o-transition: 0.5s ease;
 	-webkit-transition: 0.5s ease;
-	  width: 100%;	
-	  height: 430%;  
+	width: 100%;
+	height: 400px;
 }
 .content-grid:hover  img{
 	-webkit-filter: grayscale(100%);
