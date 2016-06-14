@@ -13,7 +13,7 @@ $foto_Perfil=leerParam("foto_Perfil","");
 $informacion_Perfil=leerParam("informacion_Perfil","");
 $xc = conectar();
 
-$sqleditar = "UPDATE dbcine.Perfil SET  usuario_Perfil='$usuario_Perfil', clave_Perfil='$clave_Perfil',nombre_Perfil='$nombre_Perfil', apellidos_Perfil='$apellidoPerfil',nacionalidad_Perfil='$nacionalidad_Perfil',foto_Perfil=$foto_Perfil, informacion_Perfil='$informacion_Perfil'
+$sqleditar = "UPDATE dbcine.Perfil SET  usuario_Perfil='$usuario_Perfil', clave_Perfil='$clave_Perfil',nombre_Perfil='$nombre_Perfil', apellidos_Perfil='$apellidoPerfil',nacionalidad_Perfil='$nacionalidad_Perfil', informacion_Perfil='$informacion_Perfil'
 WHERE  id_Perfil=$id_Perfil;";
 
 echo $sqleditar;
