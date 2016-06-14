@@ -45,5 +45,5 @@ function guardaContenido(comentario,id_Peli,id_Resena,id_Perfil)
 		//cargaContenido(id_Peli);
 		//debugger;
 		conexion2.send();
-		debugger;
+		//debugger;
 	}

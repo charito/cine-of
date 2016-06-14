@@ -9,7 +9,7 @@
 //$id_Perfil=$_SESSION['id_usuario'];
 //$id_Perfil=1;
 //$id_Peli=leerParam("id","");
-$id_Peli=4;
+$id_Peli=6;
 $xc = conectar();
 $sql1="SELECT * FROM dbcine.peliculas WHERE id_Peli='$id_Peli'";
 $res1=mysqli_query($xc,$sql1);
@@ -65,7 +65,7 @@ $rowCat=mysqli_fetch_array($res6);
 $sql7="INSERT INTO dbcine.comentarios(comentario,fecha_comentario, calificacion_comentario, id_Resena, id_Perfil) VALUES ('jojojojojo', '12-12-12', '', '1', '1');";
 
 
-$post_id = '1';
+$post_id = $id_Peli;
 desconectar($xc);
 ?>
 
@@ -172,19 +172,25 @@ desconectar($xc);
 									<div class="clearfix"></div>
 								</div>
 								<p class="info">CAST:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-								<?php while ($rowAct=mysqli_fetch_array($res4)) 
+								<?php 
+								echo $rowAct['nombre_Actor'].", "; 
+								while ($rowAct=mysqli_fetch_array($res4)) 
 								{
 									echo $rowAct['nombre_Actor'].", "; 
+									
 									
 								}
 								  ?>
 
 								   </p>
 								<p class="info">DIRECTOR: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $nombre_Director; ?></p>
-								<p class="info">GÉNERO:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<?php while ($rowCat=mysqli_fetch_array($res6)) 
+								<p class="info">CATEGORIA:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								
+								<?php 
+								echo $rowCat['nombre_Categoria'].", ";
+								while ($rowCat=mysqli_fetch_array($res6)) 
 								{
-								echo $rowCat['nombre_Categoria'].", "; 
+								echo $rowCat['nombre_Categoria'].", ";
 									
 								}
 								  ?>
