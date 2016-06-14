@@ -5,14 +5,14 @@
     $xc=conectar();
 
     /// conocer cuantas peliculas existen en la base de datos
-    $sql_numPeliculas="SELECT count(*) FROM peliculas p";
+    $sql_numPeliculas="SELECT count(*) FROM peliculas p, resena r WHERE p.id_Peli=r.Peliculas_id_Peli";
     $numPeliculas = mysqli_query($xc,$sql_numPeliculas);
     $numPeliculas = (int) mysqli_fetch_array($numPeliculas)[0];
     /// obtener TODAS las PELICULAS con paginacion
 	$current_pag = (int) leerParam("pag","1");
 	$cant_pag = (int) 12;
 	$ini_pag = ( $current_pag-1 ) * $cant_pag ;
-	$sql_allPeliculas="SELECT p.nombre_Peli, p.duracion_Peli, p.estreno_Peli, p.imagen_Portada_Peli, p.logo_Peli FROM peliculas p LIMIT $ini_pag,$cant_pag";
+	$sql_allPeliculas="SELECT p.nombre_Peli, p.duracion_Peli, p.estreno_Peli, p.imagen_Portada_Peli, p.logo_Peli, r.url_trailer FROM peliculas p, resena r WHERE p.id_Peli=r.Peliculas_id_Peli LIMIT $ini_pag,$cant_pag";
 	$allPeliculas = mysqli_query($xc,$sql_allPeliculas);
 	$allPeliculas_array = array();
 	while ($extraido = mysqli_fetch_array($allPeliculas)) {
@@ -21,6 +21,7 @@
 		$current_pelicula["nombre_Peli"] = $extraido['nombre_Peli'];
 		$current_pelicula["duracion_Peli"] = $extraido['duracion_Peli'];
 		$current_pelicula["estreno_Peli"] = $extraido['estreno_Peli'];
+		$current_pelicula["url_trailer"] = $extraido['url_trailer'];
 
 		/// los blobs se tienen que transformar paara guardarlos en el array
 		$image = imagecreatefromstring($extraido['imagen_Portada_Peli']); 
@@ -56,7 +57,7 @@
 			$categorias[] = $extraido['nombre_Categoria'];
 			$id_categoria = $extraido['id_Categoria'];
 
-			$sql2="SELECT p.nombre_Peli, p.duracion_Peli, p.estreno_Peli,p.imagen_Portada_Peli ,p.logo_Peli FROM peliculas p, categoria_peliculas ctp WHERE p.id_Peli=ctp.id_Peli and ctp.id_Categoria=$id_categoria";
+			$sql2="SELECT p.nombre_Peli, p.duracion_Peli, p.estreno_Peli, p.imagen_Portada_Peli, p.logo_Peli, r.url_trailer FROM peliculas p, categoria_peliculas ctp, resena r WHERE p.id_Peli=ctp.id_Peli and p.id_Peli=r.Peliculas_id_Peli and ctp.id_Categoria=$id_categoria";
        		$resultadop=mysqli_query($xc,$sql2);
 			
 			$peliculas = array();
@@ -65,6 +66,7 @@
 				$peli["nombre_Peli"] = $extraidop['nombre_Peli'];
 				$peli["duracion_Peli"] = $extraidop['duracion_Peli'];
 				$peli["estreno_Peli"] = $extraidop['estreno_Peli'];
+				$peli["url_trailer"] = $extraidop['url_trailer'];
 
 				/// los blobs se tienen que transformar paara guardarlos en el array
 				$image = imagecreatefromstring($extraidop['imagen_Portada_Peli']); 
@@ -139,7 +141,7 @@
 							</ul>
 							<a class="button play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-".$key_p; ?>">Mirar</a>
 							<div id="PELIC<?php echo $key."-".$key_p; ?>" class="mfp-hide">
-								<iframe src="https://www.youtube.com/embed/FXK0BCG807Y" frameborder="0" allowfullscreen></iframe>
+								<iframe src="<?php echo $value_p["url_trailer"]; ?>" frameborder="0" allowfullscreen></iframe>
 							</div>
 						</div>
 					<?php endforeach;?>
@@ -169,7 +171,7 @@
 							</ul>
 							<a class="button play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-peli"; ?>">Mirar</a>
 							<div id="PELIC<?php echo $key."-peli"; ?>" class="mfp-hide">
-								<iframe src="https://www.youtube.com/embed/FXK0BCG807Y" frameborder="0" allowfullscreen></iframe>
+								<iframe src="<?php echo $value["url_trailer"]; ?>" frameborder="0" allowfullscreen></iframe>
 							</div>
 						</div>
 						<?php if( ((int)$key+1) % 4 == 0 ): ?>
