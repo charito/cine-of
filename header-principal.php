@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+<meta charset="UTF-8">
 <title>Cinema A Entertainment Category Flat Bootstarp Resposive Website Template | Reviews :: w3layouts</title>
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <!-- Custom Theme files -->
