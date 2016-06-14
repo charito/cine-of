@@ -9,7 +9,34 @@
 	{
  		die;
 	}*/
-	
+
+	require_once("funciones.php");
+
+	$xc=conectar();   
+    $peliculas_query = "SELECT * from peliculas ORDER BY estreno_Peli DESC LIMIT 10";
+    $peliculas_resultado=mysqli_query($xc,$peliculas_query);
+    $peliculas_array = array();
+	while ($pelicula = mysqli_fetch_array($peliculas_resultado)) {
+		$peli = array();
+		$peli["nombre_Peli"] = $pelicula['nombre_Peli'];
+		$peli["duracion_Peli"] = $pelicula['duracion_Peli'];
+		$peli["estreno_Peli"] = $pelicula['estreno_Peli'];
+
+		$image = imagecreatefromstring($pelicula['imagen_Portada_Peli']); 
+		ob_start(); //start capture of the output buffer
+		imagejpeg($image, null, 80);
+		$data = ob_get_contents();
+		ob_end_clean();
+		$peli["imagen_Portada_Peli"] = $data;
+
+		$image = imagecreatefromstring($pelicula['logo_Peli']); 
+		ob_start(); //start capture of the output buffer
+		imagejpeg($image, null, 80);
+		$data = ob_get_contents();
+		ob_end_clean();
+		$peli["logo_Peli"] = $data;
+		$peliculas_array[] = $peli;
+	}
 ?>
 
 <body>
@@ -32,14 +59,12 @@
 		</div>
 
 		<div class="review-slider">
-			 <ul id="flexiselDemo1">
-			<li><img src="images/review/r1.jpg" alt=""/></li>
-			<li><img src="images/review/r2.jpg" alt=""/></li>
-			<li><img src="images/review/r3.jpg" alt=""/></li>
-			<li><img src="images/review/r4.jpg" alt=""/></li>
-			<li><img src="images/review/r5.jpg" alt=""/></li>
-			<li><img src="images/review/r6.jpg" alt=""/></li>
-		</ul>
+			<ul id="flexiselDemo1">
+			<?php foreach ($peliculas_array as $key => $value): ?>
+				<li><img src="data:image/jpeg;base64,<?php echo base64_encode($value['imagen_Portada_Peli']); ?>" alt=""/></li>
+			<?php endforeach;?>
+			</ul>
+			
 			<script type="text/javascript">
 		$(window).load(function() {
 			
