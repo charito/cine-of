@@ -131,7 +131,7 @@ $codigo = "noticia";
 		            <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?>  >
+		                           <img src=data:image/png;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?>  >
 		                        </div>
 		                        <a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
 		                        <h2><?php echo $rowNot['titulo_Noticia']; ?> </h2>
@@ -155,7 +155,7 @@ while ($rowNot=mysqli_fetch_array($res4)) {
 		                <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
+		                           <img src=data:image/png;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
 		                        </div>
 		                        <a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
 		                        <h2><?php echo $rowNot['titulo_Noticia'].$k; ?> </h2>
@@ -170,7 +170,7 @@ while ($rowNot=mysqli_fetch_array($res4)) {
 					<div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
+		                           <img src=data:image/png;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
 		                        </div>
 								<a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
 		                        <h2><?php echo $rowNot['titulo_Noticia'].$k; ?> </h2>
