@@ -196,9 +196,7 @@ $k=$k+1;
 	<div class="clear"></div>
 
 	<!-- MODAL DE NOTICIAS -->
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
+	
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
