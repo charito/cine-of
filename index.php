@@ -1,15 +1,5 @@
 <?php
 	require_once("header-principal.php");
-	//session_start()
-	/*if (isset($_SESSION['usuario'])) {
-		require_once("funciones.php");
-		$username=$_SESSION['usuario'];
-	}
-	else
-	{
- 		die;
-	}*/
-
 	require_once("funciones.php");
 
 	$xc=conectar();   

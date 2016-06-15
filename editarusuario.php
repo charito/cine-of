@@ -1,7 +1,6 @@
 <?php require_once("header-principal.php"); 
  require_once("funciones.php"); 
-  require_once("top-header.php");
-
+if(!isset($_SESSION)){session_start();}
 $id_Perfil=$_SESSION['id_usuario'];
 $xc = conectar();
 $sql1="SELECT * FROM dbcine.perfil WHERE id_Perfil='$id_Perfil'";
@@ -19,130 +18,84 @@ $informacion_Perfil=$rowPerfil[9];
 desconectar($xc);
 
 ?>
+<body>
+  <!-- header-section-starts -->
+  <div class="full">
+      <div class="menu">
+        <ul>
+          <li><a href="index.php"><div class="hm"><i class="home1"></i><i class="home2"></i></div></a></li>
+          <li><a class="active" href="videos.php"><div class="video"><i class="videos"></i><i class="videos1"></i></div></a></li>
+          <li><a href="reviews.php"><div class="cat"><i class="watching"></i><i class="watching1"></i></div></a></li>
+          <li><a href="404.php"><div class="bk"><i class="booking"></i><i class="booking1"></i></div></a></li>
+          <li><a href="contact.php"><div class="cnt"><i class="contact"></i><i class="contact1"></i></div></a></li>
+        </ul>
+      </div>
+    <div class="main">
+    <div class="video-content">
+        <?php
+          require_once("top-header.php");
+        ?>
 
-<!-- <header>
-    <div class="menu">
-                <ul>
-                    <li><a href="index.php"><div class="hm"><i class="home1"></i><i class="home2"></i></div></a></li>
-                    <li><a href="videos.php"><div class="video"><i class="videos"></i><i class="videos1"></i></div></a></li>
-                    <li><a class="active" href="reviews.php"><div class="cat"><i class="watching"></i><i class="watching1"></i></div></a></li>
-                    <li><a href="404.php"><div class="bk"><i class="booking"></i><i class="booking1"></i></div></a></li>
-                    <li><a href="contact.php"><div class="cnt"><i class="contact"></i><i class="contact1"></i></div></a></li>
-                </ul>
-            </div> 
-    </header>
--->
+      <div class="right-content">
 
-        <!-- /. NAV SIDE  -->
-        <div id="page-wrapper" >
+<div class="row">
+  <div class="col-sm-12 col-md-offset-3 col-md-6">
+     
+      <form method="post" action="guardarusuario.php">
 
-            <div id="page-inner">
-                <div class="row">
-                    <div class="col-md-12">
-                     <h2>Usuario</h2>   
-                        <h5>BIENVENIDO A cineCivilWar</h5>
-                       
-                    </div>
-                </div>
-                 <!-- /. ROW  -->
-                 <hr />
-               <div class="row">
-                <div class="col-md-12">
-                    <!-- Form Elements -->
-                     <form method="post" action="guardarusuario.php">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                   
-                                    <form method="post" action="guardarusuario.php">
+            <div class="form-group">
+              <label>ID usuario</label>
+              <input class="form-control" name="id_Perfil" value="<?php echo $id_Perfil; ?>"  />
+         </div>
 
-                                          <div class="form-group">
-                                            <label>ID usuario</label>
-                                            <input class="form-control" name="id_Perfil" value="<?php echo $id_Perfil; ?>"  />
-                                       </div>
+          <div class="form-group">
+              <label>Nombre Usuario</label>
+              <input class="form-control" name="Nombre_Usuario" value="<?php echo $usuario_Perfil; ?>"  />
+         </div>
 
-                                        <div class="form-group">
-                                            <label>Nombre Usuario</label>
-                                            <input class="form-control" name="Nombre_Usuario" value="<?php echo $usuario_Perfil; ?>"  />
-                                       </div>
+          <div class="form-group">
+              <label>Contraseña</label>
+              <input class="form-control" name="Clave_Usuario" value="<?php echo $clave_Perfil; ?>"  />
+         </div>
 
-                                        <div class="form-group">
-                                            <label>Contraseña</label>
-                                            <input class="form-control" name="Clave_Usuario" value="<?php echo $clave_Perfil; ?>"  />
-                                       </div>
-
-                                        <div class="form-group">
-                                            <label>Nombre</label>
-                                            <input class="form-control" name="Nombre_Perfil" value="<?php echo $nombre_Perfil; ?>" />
-                                       </div>
-                                     
+          <div class="form-group">
+              <label>Nombre</label>
+              <input class="form-control" name="Nombre_Perfil" value="<?php echo $nombre_Perfil; ?>" />
+         </div>
+       
 
 
-                                        <div class="form-group">
-                                            <label>Apelldios</label>
-                                            <input class="form-control" name="Apellidos_Perfil" value="<?php echo $apellido_Perfil; ?>"  />
-                                            
-                                       </div>
-                                        <div class="form-group">
-                                            <label>Nacionalidad</label>
-                                            <input class="form-control" name="Nacionalidad_Perfil" value="<?php echo $nacionalidad_Perfil; ?>"  />
-                                            </div>
-                                            
-                                       <div class="form-group">
-                                            <label>Subir Imagen</label>
-                                            <input name="foto_Perfil" type="file" />
-                                        </div>
+          <div class="form-group">
+              <label>Apelldios</label>
+              <input class="form-control" name="Apellidos_Perfil" value="<?php echo $apellido_Perfil; ?>"  />
+              
+         </div>
+          <div class="form-group">
+              <label>Nacionalidad</label>
+              <input class="form-control" name="Nacionalidad_Perfil" value="<?php echo $nacionalidad_Perfil; ?>"  />
+              </div>
+              
+         <div class="form-group">
+              <label>Subir Imagen</label>
+              <input name="foto_Perfil" type="file" />
+          </div>
 
-                                        <div class="form-group">
-                                            <label>Informacion</label>
-                                            <input class="form-control" name="informacion_Perfil" value="<?php echo $informacion_Perfil; ?>"  />
-                                       </div>
-                                        
-                                       
-                                        <input type="text" name="accion" hidden="yes" value="editar">
-                                       
-                                        <button type="submit" class="btn btn-default">Guardar</button>
-                                        <button type="reset" class="btn btn-primary">Cancelar</button>
+          <div class="form-group">
+              <label>Informacion</label>
+              <input class="form-control" name="informacion_Perfil" value="<?php echo $informacion_Perfil; ?>"  />
+         </div>
+          
+         
+          <input type="text" name="accion" hidden="yes" value="editar">
+         
+          <button type="submit" class="btn btn-default">Guardar</button>
+          <button type="reset" class="btn btn-primary">Cancelar</button>
+</form>
+</div>
+</div>
 
-                                   
-
-    
-
-                                 
-         <!-- Elements -->
-                </div>
-                </form>
-            </div>
-               </div>
-               </div>
-
-                
-    </div>
-             <!-- /. PAGE INNER  -->
-            </div>
-         <!-- /. PAGE WRAPPER  -->
-        </div>
-        </form>
-        </div>
-        </div>
-        </div>
-        </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-      <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-      <!-- CUSTOM SCRIPTS -->
-    <script src="assets/js/custom.js"></script>
-    
-   
-</body>
-</html>
+      </div>
+  </div>
+  <?php
+    require_once("footer.php");
+  ?>
