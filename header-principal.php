@@ -11,6 +11,7 @@
 <script src="js/jquery.min.js"></script>
 <!-- Custom Theme files -->
 <script src="js/mostrarComentarios.js"></script>
+<script src="js/mostrarPOP.js"></script>
  <link type="text/css" rel="stylesheet" href="rating/css/stylestar.css">
         <link type="text/css" rel="stylesheet" href="rating/css/example.css">
         <script type="text/javascript" src="rating/jquery.min.js"></script>

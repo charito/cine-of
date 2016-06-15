@@ -8,7 +8,7 @@
      return $default;
   }
   function conectar() {
-     $xc = mysqli_connect("localhost","root","root");
+     $xc = mysqli_connect("localhost","root","");
      mysqli_select_db($xc,"dbcine");
      return $xc;
   }

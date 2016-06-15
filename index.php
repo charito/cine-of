@@ -40,6 +40,12 @@
 ?>
 
 <body>
+
+
+
+
+
+
 	<!-- header-section-starts -->
 	<div class="full">
 		<div class="menu">
@@ -109,6 +115,7 @@
 $sql4="SELECT id_Noticia, titulo_Noticia,imagen_Noticia,subtitulo_Noticia FROM dbcine.noticias;";
 $res4=mysqli_query($xc,$sql4);
 $rowNot=mysqli_fetch_array($res4);
+$codigo = "noticia";
 
 					/*		echo $rowNot['titulo_Noticia'].", ";
 					while ($rowNot=mysqli_fetch_array($res4)) {
@@ -118,20 +125,23 @@ $rowNot=mysqli_fetch_array($res4);
 					}
 
 */
-echo "
+?>
+
 	 				<div class=row>
-		                <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
+		            <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                            <img src=data:image/jpg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " alt= />
-									
+		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?>  >
 		                        </div>
-		                        <h2>"; echo $rowNot['titulo_Noticia']; echo "</h2>
-		                        <p>"; echo $rowNot['subtitulo_Noticia']; echo"</p>
+		                        <a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
+		                        <h2><?php echo $rowNot['titulo_Noticia']; ?> </h2>
+		                       <p><?php echo $rowNot['subtitulo_Noticia']; ?> </p> <a/>
+							   
 		                    </div>
-							</div>
+		                </div>
 		                
-						 ";
+						 
+<?php
 						
 
 $i=0;
@@ -139,48 +149,63 @@ $k = 2;
 while ($rowNot=mysqli_fetch_array($res4)) {
   //Para corregir el problema de que se empieza a contar de 0 
  if ($k == 4 || $k == 7 || $k ==10 ){ 
- 
-	 			echo "</div>
+ ?>
+	 			</div>
 	 				<div class=row>
 		                <div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                            <img src=data:image/jpg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " />
-									
+		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
 		                        </div>
-		                        <h2>"; echo $rowNot['titulo_Noticia'].$k; echo "</h2>
-		                       <p>"; echo $rowNot['subtitulo_Noticia']; echo "</p>
+		                        <a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
+		                        <h2><?php echo $rowNot['titulo_Noticia'].$k; ?> </h2>
+		                       <p><?php echo $rowNot['subtitulo_Noticia']; ?> </p> <a/>
 							   
 		                    </div>
-		                </div>";
-
+		                </div>
+<?php
  }
  else {   
-					echo "<div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
+	 ?>
+					<div class=col-sm-4 text-center padding wow fadeIn data-wow-duration=1000ms data-wow-delay=300ms>
 		                    <div class=single-service>
 		                        <div class=wow scaleIn data-wow-duration=500ms data-wow-delay=300ms>
-		                            <img onclick src=data:image/jpeg;base64,"; echo base64_encode($rowNot['imagen_Noticia']); echo " />
+		                           <img src=data:image/jpg;base64,<?php echo base64_encode($rowNot['imagen_Noticia']); ?> >
 		                        </div>
-		                        <h2>"; echo $rowNot['titulo_Noticia']; echo "</h2>
-		                      <p>"; echo $rowNot['subtitulo_Noticia'].$k; echo"</p>
-		                    </div> 
-							 </div>
-							 ";
-
+								<a data-toggle="modal" data-target="#myModal" onclick ="cargaPOP( <?php echo $rowNot['id_Noticia']; ?>)">
+		                        <h2><?php echo $rowNot['titulo_Noticia'].$k; ?> </h2>
+		                       <p><?php echo $rowNot['subtitulo_Noticia']; ?> </p> <a/>
+		                    </div>
+		                </div>
+<?php
   } 
  //{$clase = ' class="tercero"';}
  //echo '<li'.$clase.'>'.$elemento[$i].'</li>'
 $k=$k+1;
-
 }
- 
 
 					?>
-
 		        </div>
     		</section>
 			<div class="clearfix"></div>
+	
 		</div>	
+
+
+
+	<div class="clear"></div>
+
+	<!-- MODAL DE NOTICIAS -->
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ 
+</div>
+
+
 	<?php
 		require_once("footer.php");
 	?>
