@@ -47,3 +47,46 @@ function guardaContenido(comentario,id_Peli,id_Resena,id_Perfil)
 		conexion2.send();
 		//debugger;
 	}
+
+function cargaPOPactor(id)
+{		var conexion;
+	if (window.XMLHttpRequest) {
+		conexion = new XMLHttpRequest();
+	}else
+		{
+			conexion = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		conexion.onreadystatechange=function() 
+		{ 
+			if (conexion.readyState==4)
+			{
+				document.getElementById('myModal').innerHTML=conexion.responseText;
+			//debugger;
+			}
+		}
+		conexion.open("GET","js/popupActor.php?id="+id, true);
+		//debugger;
+		conexion.send();
+	}
+
+function cargaPOPdirector(id)
+{		var conexion;
+	if (window.XMLHttpRequest) {
+		conexion = new XMLHttpRequest();
+	}else
+		{
+			conexion = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		conexion.onreadystatechange=function() 
+		{ 
+			if (conexion.readyState==4)
+			{
+				document.getElementById('myModal').innerHTML=conexion.responseText;
+			//debugger;
+			}
+		}
+		conexion.open("GET","js/popupDirector.php?id="+id, true);
+		//debugger;
+		conexion.send();
+	}
+

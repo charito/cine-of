@@ -43,7 +43,7 @@ $url_sub = $rowRes[7];
 
 
 
-$sql4="SELECT nombre_Actor FROM dbcine.actores natural join dbcine.actores_peliculas where dbcine.actores_peliculas.id_Peli = '$id_Peli' order by 1;";
+$sql4="SELECT id_Actor, nombre_Actor FROM dbcine.actores natural join dbcine.actores_peliculas where dbcine.actores_peliculas.id_Peli = '$id_Peli' order by 1;";
 $res4=mysqli_query($xc,$sql4);
 $rowAct=mysqli_fetch_array($res4);
 
@@ -171,13 +171,19 @@ desconectar($xc);
 									</div> -->
 									<div class="clearfix"></div>
 								</div>
-								<p class="info">CAST:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-								<?php 
-								echo $rowAct['nombre_Actor'].", "; 
+								<p class="info">ACTORES: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								
+									<a data-toggle="modal" data-target="#myModal" onmousemove ="cargaPOPactor( <?php echo $rowAct['id_Actor']; ?>)"><?php
+									echo $rowAct['nombre_Actor'].", "; ?>
+									</a> <?php
+								
+								  
+								
 								while ($rowAct=mysqli_fetch_array($res4)) 
-								{
-									echo $rowAct['nombre_Actor'].", "; 
-									
+								{ ?>
+									<a data-toggle="modal" data-target="#myModal" onmousemove ="cargaPOPactor( <?php echo $rowAct['id_Actor']; ?>)"><?php
+									echo $rowAct['nombre_Actor'].", "; ?>
+									</a> <?php
 									
 								}
 								  ?>
@@ -317,5 +323,10 @@ desconectar($xc);
 
 
     </script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ 
+</div>
+
 </body>
 </html>

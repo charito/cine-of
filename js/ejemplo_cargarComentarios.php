@@ -4,7 +4,7 @@ $xc = conectar();
 $id_Peli = $_GET['var'];
 //echo $id_Peli;
 
-$sql5="SELECT comentario, fecha_comentario, calificacion_comentario, nombre_Perfil,foto_Perfil FROM dbcine.perfil natural join dbcine.comentarios natural join dbcine.resena where perfil.id_Perfil = comentarios.id_Perfil and dbcine.resena.Peliculas_id_Peli =$id_Peli order by fecha_comentario = -1;";
+$sql5="SELECT comentario, fecha_comentario, calificacion_comentario, nombre_Perfil,foto_Perfil,id_Perfil FROM dbcine.perfil natural join dbcine.comentarios natural join dbcine.resena where perfil.id_Perfil = comentarios.id_Perfil and dbcine.resena.Peliculas_id_Peli =$id_Peli order by fecha_comentario = -1;";
 
 $res5=mysqli_query($xc,$sql5);
 
@@ -31,7 +31,7 @@ $res5=mysqli_query($xc,$sql5);
 						<img src=data:image/jpg;base64,"; echo base64_encode($rowCom['foto_Perfil']);  echo " class= img-responsive alt= />
 					</div>
 					<div class='col-md-10 comments-section-grid-text'>
-						<h4><a href='#'>";echo $rowCom['nombre_Perfil'];  echo "</a></h4>
+						<h4><a href='perfil2.php?id="; echo $rowCom['id_Perfil']; echo "&accion=observar'>";echo $rowCom['nombre_Perfil'];  echo "</a></h4>
 
 						<label>"; echo $rowCom['fecha_comentario'];  echo "</label>
 						<p>"; echo $rowCom['comentario']; echo "</p>

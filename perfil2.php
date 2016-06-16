@@ -1,9 +1,31 @@
 <?php
-    require_once("top-header.php");
+ require_once("top-header.php");
     require_once("funciones.php");
 
 
+if($_GET['id']!=null){
+    $id=$_GET['id'];
+$accion=$_GET['accion'];
+}
+else {
+    # code...
+}
+
+
+if($accion=="observar")
+{
+$id_Perfil=$id;
+}
+else
+{
+    $id=$id_Perfil;
+    $accion="perfil";
 $id_Perfil=$_SESSION['id_usuario'];
+}
+   
+
+
+
 $xc = conectar();
 $sql1="SELECT * FROM dbcine.perfil WHERE id_Perfil='$id_Perfil'";
 $res1=mysqli_query($xc,$sql1);
