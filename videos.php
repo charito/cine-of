@@ -139,7 +139,7 @@
 								<li><a href="#"><img src="images/views.png" title="views" /></a></li>
 								<li><a href="#"><img src="images/link.png" title="link" /></a></li>
 							</ul>
-							<a class="button play-icon popup-with-zoom-anim" href="#PELIC<?php echo $key."-".$key_p; ?>">Mirar</a>
+							<a class="button" href="single.php">Ver más</a>
 							<div id="PELIC<?php echo $key."-".$key_p; ?>" class="mfp-hide">
 								<iframe src="<?php echo $value_p["url_trailer"]; ?>" frameborder="0" allowfullscreen></iframe>
 							</div>
